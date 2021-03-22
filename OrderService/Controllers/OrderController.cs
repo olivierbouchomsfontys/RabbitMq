@@ -20,12 +20,12 @@ namespace OrderService.Controllers
             _createdMessagePublisher = new OrderCreatedMessagePublisher(rabbitMq);
         }
         
-        [HttpGet("")]
+        [HttpGet("{id}")]
         public ActionResult<Order> Get(int id)
         {
             return Ok(Orders.First(c => c.Id == id));
         }
-            
+        
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Order>> GetAll()
         {

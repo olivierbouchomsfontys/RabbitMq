@@ -23,13 +23,13 @@ namespace CustomerService.Controllers
             _deletedMessagePublisher = new CustomerDeletedMessagePublisher(rabbitMq);
         }
 
-        [HttpGet("")]
+        [HttpGet("{id}")]
         public ActionResult<Customer> Get(int id)
         {
             return Ok(Customers.First(c => c.Id == id));
         }
             
-        [HttpGet("GetAll")]
+        [HttpGet("")]
         public ActionResult<IEnumerable<Customer>> GetAll()
         {
             return Ok(Customers);
@@ -47,7 +47,7 @@ namespace CustomerService.Controllers
             return customer;
         }
 
-        [HttpDelete("")]
+        [HttpDelete("{id}")]
         public ActionResult<Customer> Delete(int id)
         {
             Customer customer = Customers.FirstOrDefault(c => c.Id == id);
