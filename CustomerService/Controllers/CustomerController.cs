@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CustomerService.Dto;
 using CustomerService.Entities;
 using CustomerService.Messaging;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,14 @@ namespace CustomerService.Controllers
         [HttpGet("{id}")]
         public ActionResult<Customer> Get(int id)
         {
-            return Ok(Customers.First(c => c.Id == id));
+            Customer customer = Customers.FirstOrDefault(c => c.Id == id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            
+            return Ok(customer);
         }
             
         [HttpGet("")]
@@ -36,9 +44,13 @@ namespace CustomerService.Controllers
         }
 
         [HttpPost("")]
-        public ActionResult<Customer> Create(Customer customer)
+        public ActionResult<Customer> Create(CreateCustomerInput input)
         {
-            customer.Id = Customers.Count;
+            Customer customer = new ()
+            {
+                Name = input.Name,
+                Id = Customers.Count
+            };
 
             Customers.Add(customer);
             
