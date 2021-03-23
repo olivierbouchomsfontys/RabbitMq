@@ -39,5 +39,10 @@ namespace ApiGateway.Aggregators.Base
 
             return new DownstreamResponse(stringContent, statusCode, new List<KeyValuePair<string, IEnumerable<string>>>(), reasonPhrase);
         }
+
+        protected bool AnyFailed(params DownstreamResponse[] responses)
+        {
+            return responses.Any(response => response.StatusCode != HttpStatusCode.OK);
+        }
     }
 }

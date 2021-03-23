@@ -25,7 +25,7 @@ namespace ApiGateway.Aggregators
             HttpStatusCode statusCode = HttpStatusCode.OK;
             string reasonPhrase = "OK";
 
-            if (customerResponse.StatusCode != HttpStatusCode.OK || orderResponse.StatusCode != HttpStatusCode.OK)
+            if (AnyFailed(customerResponse, orderResponse))
             {
                 statusCode = HttpStatusCode.MultiStatus;
                 reasonPhrase = ReasonPhrases.GetReasonPhrase((int) HttpStatusCode.MultiStatus);
