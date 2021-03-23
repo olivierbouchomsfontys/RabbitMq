@@ -69,7 +69,8 @@
         "CustomerById",
         "OrdersByCustomerId"
       ],
-      "UpstreamPathTemplate": "/customerorder/{id}"
+      "UpstreamPathTemplate": "/customerorder/{id}",
+      "Aggregator": "CustomerOrderAggregator"
     }
   ],
   "GlobalConfiguration": {

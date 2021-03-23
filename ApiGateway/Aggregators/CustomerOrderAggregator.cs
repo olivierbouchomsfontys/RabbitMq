@@ -1,19 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
+using ApiGateway.Aggregators.Base;
+using ApiGateway.Aggregators.Extensions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.WebUtilities;
+using Newtonsoft.Json.Linq;
 using Ocelot.Middleware;
-using Ocelot.Multiplexer;
 
 namespace ApiGateway.Aggregators
 {
-    public class CustomerOrderAggregator : IDefinedAggregator
+    public class CustomerOrderAggregator : AggregatorBase
     {
-        public Task<DownstreamResponse> Aggregate(List<HttpContext> responses)
+        public override async Task<DownstreamResponse> Aggregate(List<HttpContext> responses)
         {
-            throw new NotImplementedException();
+            var customerResponse = GetResponse(responses, "CustomerById");
+            var orderResponse = GetResponse(responses, "OrdersByCustomerId");
+            
+            var body = new JObject();
+
+            body.Add("customer", await customerResponse.GetBody());
+            body.Add("orders", await orderResponse.GetBody());
+
+            HttpStatusCode statusCode = HttpStatusCode.OK;
+            string reasonPhrase = "OK";
+
+            if (customerResponse.StatusCode != HttpStatusCode.OK || orderResponse.StatusCode != HttpStatusCode.OK)
+            {
+                statusCode = HttpStatusCode.MultiStatus;
+                reasonPhrase = ReasonPhrases.GetReasonPhrase((int) HttpStatusCode.MultiStatus);
+            }
+
+            return CreateResponse(body, statusCode, reasonPhrase);
         }
     }
 }
