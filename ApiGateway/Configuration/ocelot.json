@@ -22,7 +22,8 @@
         }
       ],
       "UpstreamPathTemplate": "/customer/{id}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Key": "CustomerById"
     },
     {
       "DownstreamPathTemplate": "/order",
@@ -47,6 +48,28 @@
       ],
       "UpstreamPathTemplate": "/order/{id}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/order/customer/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5010
+        }
+      ],
+      "UpstreamPathTemplate": "/order/customer/{id}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "Key": "OrdersByCustomerId"
+    }
+  ],
+  "Aggregates": [
+    {
+      "RouteKeys": [
+        "CustomerById",
+        "OrdersByCustomerId"
+      ],
+      "UpstreamPathTemplate": "/customerorder/{id}"
     }
   ],
   "GlobalConfiguration": {
