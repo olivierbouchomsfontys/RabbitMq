@@ -22,7 +22,7 @@
         }
       ],
       "UpstreamPathTemplate": "/customer/{id}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ],
       "Key": "CustomerById"
     },
     {
@@ -47,7 +47,7 @@
         }
       ],
       "UpstreamPathTemplate": "/order/{id}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+      "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ]
     },
     {
       "DownstreamPathTemplate": "/order/customer/{id}",

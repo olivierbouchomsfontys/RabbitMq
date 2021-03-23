@@ -15,13 +15,6 @@ namespace ApiGateway.Aggregators.Base
     {
         public abstract Task<DownstreamResponse> Aggregate(List<HttpContext> responses);
 
-        protected async Task<JToken> GetBody(DownstreamResponse response)
-        {
-            var responseString = await response.Content.ReadAsStringAsync();
-
-            return JToken.Parse(responseString);
-        }
-
         protected DownstreamResponse GetResponse(List<HttpContext> responses, string key)
         {
             return responses
