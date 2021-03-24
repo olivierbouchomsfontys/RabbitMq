@@ -23,9 +23,8 @@ namespace CustomerService.Repository
             lock (_customers)
             {
                 customer.AssignId(_customers.Count + 1);
+                _customers.Add(customer);
             }
-            
-            _customers.Add(customer);
         }
     }
 }

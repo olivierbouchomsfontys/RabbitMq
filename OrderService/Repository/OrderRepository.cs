@@ -23,9 +23,8 @@ namespace OrderService.Repository
             lock (_orders)
             {
                 order.AssignId(_orders.Count + 1);
+                _orders.Add(order);
             }
-            
-            _orders.Add(order);
         }
 
         public void DeleteForCustomer(int id)
